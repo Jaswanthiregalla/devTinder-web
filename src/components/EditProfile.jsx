@@ -10,9 +10,9 @@ const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
-  const [age, setAge] = useState(user.age);
-  const [gender, setGender] = useState(user.gender);
-  const [about, setAbout] = useState(user.about);
+  const [age, setAge] = useState(user.age || "");
+  const [gender, setGender] = useState(user.gender || "");
+  const [about, setAbout] = useState(user.about || "");
   const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
 
@@ -21,12 +21,25 @@ const EditProfile = ({ user }) => {
   const saveProfile = async () => {
     //Clear Errors
     setError("");
+
     try {
-      const res = await axios.patch(
-        BASE_URL + "/profile/edit",
-        { firstName, lastName, photoUrl, age, gender, about },
-        { withCredentials: true },
-      );
+      const profileData = {
+        firstName,
+        lastName,
+        photoUrl,
+        about,
+      };
+
+      if (age !== "") {
+        profileData.age = age;
+      }
+
+      if (gender !== "") {
+        profileData.gender = gender;
+      }
+      const res = await axios.patch(BASE_URL + "/profile/edit", profileData, {
+        withCredentials: true,
+      });
       dispatch(addUser(res?.data?.data));
       setShowToast(true);
       setTimeout(() => {
@@ -93,12 +106,13 @@ const EditProfile = ({ user }) => {
               <div>
                 <legend className="fieldset-legend">Gender:</legend>
                 <select
-                  defaultValue="Select your gender"
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                   className="select"
                 >
-                  <option disabled={true}>Select your gender</option>
+                  <option value="" disabled>
+                    Select your gender
+                  </option>
                   <option>male</option>
                   <option>female</option>
                   <option>others</option>
