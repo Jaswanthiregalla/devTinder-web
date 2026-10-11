@@ -18,7 +18,7 @@ const Premium = () => {
       console.log("Premium Verification Failed: ", err);
     }
   };
-  
+
   useEffect(() => {
     verifyPremiumUser();
   }, []);
@@ -58,7 +58,9 @@ const Premium = () => {
   };
 
   return isUserPremium ? (
-    <h1 className="font-bold m-10">You're already a Premium User</h1>
+    <h1 className="flex justify-center font-bold m-10 text-3xl">
+      You're already a Premium User
+    </h1>
   ) : (
     <div className="m-10">
       <div className="flex w-full">
