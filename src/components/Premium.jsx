@@ -6,19 +6,18 @@ const Premium = () => {
 
   useEffect(() => {
     const verifyPremiumUser = async () => {
-        try {
-                const res = await axios.get(BASE_URL + "/premium/verify", {
-        withCredentials: true,
-      });
+      try {
+        const res = await axios.get(BASE_URL + "/premium/verify", {
+          withCredentials: true,
+        });
 
-      if (res.data.isPremium) {
-        setIsUserPremium(true);
+        if (res.data.isPremium) {
+          setIsUserPremium(true);
+        }
+      } catch (err) {
+        console.log("Premium Verification Failed: ", err);
       }
-    }
-      catch(err) {
-        console.log("Premium Verification Failed: ", err)
-      }
-    }
+    };
     verifyPremiumUser();
   }, []);
 
