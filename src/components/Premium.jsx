@@ -1,23 +1,25 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useState, useEffect } from "react";
 const Premium = () => {
   const [isUserPremium, setIsUserPremium] = useState(false);
 
-  useEffect(() => {
-    const verifyPremiumUser = async () => {
-      try {
-        const res = await axios.get(BASE_URL + "/premium/verify", {
-          withCredentials: true,
-        });
+  const verifyPremiumUser = async () => {
+    try {
+      const res = await axios.get(BASE_URL + "/premium/verify", {
+        withCredentials: true,
+      });
 
-        if (res.data.isPremium) {
-          setIsUserPremium(true);
-        }
-      } catch (err) {
-        console.log("Premium Verification Failed: ", err);
+      if (res.data.isPremium) {
+        setIsUserPremium(true);
       }
-    };
+    } catch (err) {
+      console.log("Premium Verification Failed: ", err);
+    }
+  };
+  
+  useEffect(() => {
     verifyPremiumUser();
   }, []);
 
