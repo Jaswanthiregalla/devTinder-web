@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
@@ -44,7 +45,7 @@ const Connections = () => {
         return (
           <div
             key={_id}
-            className="p-4 flex rounded-lg bg-base-300 w-1/2 mx-auto m-4"
+            className="p-4 flex rounded-lg bg-base-300 w-1/2 mx-auto m-4 justify-between items-center"
           >
             <div>
               <img src={photoUrl} alt="photo" className="w-20 rounded-full" />
@@ -55,6 +56,11 @@ const Connections = () => {
               </h2>
               <p>{about}</p>
               {age && gender && <p>{age + " , " + gender}</p>}
+            </div>
+            <div>
+              <Link to={"/chat/" + _id}>
+                <button className="btn btn-primary">Chat</button>
+              </Link>
             </div>
           </div>
         );
